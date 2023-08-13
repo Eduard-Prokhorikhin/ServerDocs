@@ -32,7 +32,7 @@ sudo docker volume create portainer_data
 ```
 and then create the container.
 ```
-sudo docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+sudo docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always --network=general -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 ```
 Chosing to utilize the legacy http port 9000 for conviniance reasons, as the https connection will not matter as any exposure to the web will be done with [Cloudflare Tunnel](#cloudflare-tunnel).
 
@@ -54,15 +54,25 @@ Cloudflare Tunnel, formerly known as "Argo Tunnel," is a service provided by Clo
 ### *Install*
 After seting up your Cloudflare account and domain you can go your home page and chose "Zero Trust" from the side menu.
 Next under the "Access" dropdown chose "Tunnels" and chose you plan (free).
-![img](/img/tunnel1)
+
+![img](/img/tunnel1.png)
+
 Then you should be ready to add a new tunnel. Proceede to name your tunnel and choose your prefered method of installation, I chose the docker install.
-![img](/img/tunnel2)
-Then though the docker CLI we innitiate our connector on the same network as the services you want to expose.
+
+![img](/img/tunnel2.png)
+
+Then though the docker CLI we innitiate our connector on the same network as the services you want to expose (replacing the placeholder with your token).
 ```
 sudo docker run -d --restart=always --name=tunnel --network=general cloudflare/cloudflared:latest tunnel --no-autoupdate run --token [superSecretToken]
 ```
 If all was sucessfull you should see
-![img](/img/tunnel3)
+
+![img](/img/tunnel3.png)
+
+### *Expose a service to the web*
+In the tunnel configuration page chose the "Public hostanames" tab there you need to click on "Add a public hostname" button. Then fill in your details in this example I am going to expose my portainer instance, using docker network name recognition I can simply type in the container name in the url field. Lastly click "Save" and you should be all good.
+
+![img](/img/tunnel3.png)
 
 ## Grafana
 
