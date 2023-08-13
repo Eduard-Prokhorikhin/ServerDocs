@@ -28,11 +28,11 @@ Portainer is an open-source management platform designed to simplify the deploym
 ### *Install*
 After installing [docker and docker-compose](#docker) create a volume
 ```
-docker volume create portainer_data
+sudo docker volume create portainer_data
 ```
 and then create the container.
 ```
-docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+sudo docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 ```
 Chosing to utilize the legacy http port 9000 for conviniance reasons, as the https connection will not matter as any exposure to the web will be done with [Cloudflare Tunnel](#cloudflare-tunnel).
 
@@ -49,7 +49,20 @@ To access the Portainer gui go to ```http://serverIP:9000```. There you will be 
 
 
 ## Cloudflare Tunnel
+Cloudflare Tunnel, formerly known as "Argo Tunnel," is a service provided by Cloudflare that securely connects your infrastructure to the Cloudflare network. It allows you to route traffic from your servers, data centers, or private networks through Cloudflare's global network of data centers. This offers several benefits, including enhanced security, performance optimization, and simplified network management.
 
+### *Install*
+After seting up your Cloudflare account and domain you can go your home page and chose "Zero Trust" from the side menu.
+Next under the "Access" dropdown chose "Tunnels" and chose you plan (free).
+![img](/img/tunnel1)
+Then you should be ready to add a new tunnel. Proceede to name your tunnel and choose your prefered method of installation, I chose the docker install.
+![img](/img/tunnel2)
+Then though the docker CLI we innitiate our connector on the same network as the services you want to expose.
+```
+sudo docker run -d --restart=always --name=tunnel --network=general cloudflare/cloudflared:latest tunnel --no-autoupdate run --token [superSecretToken]
+```
+If all was sucessfull you should see
+![img](/img/tunnel3)
 
 ## Grafana
 
