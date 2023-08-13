@@ -79,6 +79,14 @@ In the tunnel configuration page chose the "Public hostanames" tab there you nee
 
 # Services
 ## Nextcloud
+Nextcloud is an open-source, self-hosted cloud collaboration platform that enables individuals and organizations to store, share, and manage files, documents, calendars, contacts, and more. It offers features similar to popular cloud services, such as file synchronization, data access from various devices, secure sharing with others, and collaborative tools like document editing and real-time collaboration. Nextcloud prioritizes data privacy and security, allowing users to maintain control over their data by hosting the platform on their own servers or choosing trusted providers. This provides a flexible and customizable solution for those seeking an alternative to commercial cloud storage services while maintaining control over their digital assets.
+
+![img](https://frappecloud.com/files/nextcloud-square-logo.png)
+
+I will be primarilly using this for cloud storage for me and my family, but some of the other features are also nice to have.
+
+### *Install*
+I will be installing the Nextcloud All-in-One [docker](#docker) image utilizing [Portainer](#Portainer) which i have set up previously. Following the [official documentation](https://github.com/nextcloud/all-in-one) I am going to be using a [premade docker compose script](https://github.com/nextcloud/all-in-one/blob/main/compose.yaml) the have made for Portainer. Deploying it with Cloudflare Tunnel comes with some major downsides according to the docs, so I should deplay it behind a traditional reverse proxy.
 
 
 ## Jellyfin
