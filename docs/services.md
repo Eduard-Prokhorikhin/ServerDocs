@@ -72,7 +72,7 @@ If all was sucessfull you should see
 ### *Expose a service to the web*
 In the tunnel configuration page chose the "Public hostanames" tab there you need to click on "Add a public hostname" button. Then fill in your details in this example I am going to expose my portainer instance, using docker network name recognition I can simply type in the container name in the url field. Lastly click "Save" and you should be all good.
 
-![img](/img/tunnel3.png)
+![img](/img/tunnel4.png)
 
 ## Grafana
 
