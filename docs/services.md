@@ -15,13 +15,17 @@
   - [Nextcloud](#nextcloud)
   - [Jellyfin](#jellyfin)
   - [Website](#website)
+
+ ---
   
 # Management
 ## GoDaddy
 
+---
 
 ## Cloudflare
 
+---
 
 ## Portainer
 Portainer is an open-source management platform designed to simplify the deployment and management of containerized applications and infrastructure. It provides an intuitive web-based interface that allows users to easily interact with and manage Docker containers, Kubernetes clusters, and other container orchestration tools. Portainer enables both beginners and experienced developers to streamline the containerization process and monitor their applications with ease.
@@ -38,6 +42,8 @@ sudo docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -
 Chosing to utilize the legacy http port 9000 for conviniance reasons, as the https connection will not matter as any exposure to the web will be done with [Cloudflare Tunnel](#cloudflare-tunnel).
 
 To access the Portainer gui go to ```http://serverIP:9000```. There you will be asked to make an admin account. And thats it, you are good to go!
+
+---
 
 ## Nginx Proxy Manager
 Nginx Proxy Manager is a web-based application designed to simplify the process of managing reverse proxy configurations using the Nginx web server. It provides a user-friendly interface for users to create, modify, and manage proxy rules that enable routing incoming web traffic to various backend services, such as web applications or APIs. Nginx Proxy Manager streamlines the typically complex configuration tasks associated with setting up reverse proxies, making it accessible to users with varying levels of technical expertise. Through its intuitive dashboard, users can easily create custom domain configurations, set up SSL certificates, manage routing rules, and monitor traffic flow, all without directly dealing with intricate Nginx configuration files. This tool is particularly useful for individuals or organizations aiming to efficiently and securely expose multiple web services using a single public IP address.
@@ -83,16 +89,20 @@ Password: changeme
 
 You will then be asked to change the default user and create a new password. Now the settup process is complete.
 
+---
 
 # Utils
 ## RAID
 
+---
 
 ## Cron
 
+---
 
 ## Docker
 
+---
 
 ## Cloudflare Tunnel
 Cloudflare Tunnel, formerly known as "Argo Tunnel," is a service provided by Cloudflare that securely connects your infrastructure to the Cloudflare network. It allows you to route traffic from your servers, data centers, or private networks through Cloudflare's global network of data centers. This offers several benefits, including enhanced security, performance optimization, and simplified network management.
@@ -120,8 +130,11 @@ In the tunnel configuration page chose the "Public hostanames" tab there you nee
 
 ![img](/img/tunnel4.png)
 
+---
+
 ## Grafana
 
+---
 
 # Services
 ## Nextcloud
@@ -134,10 +147,12 @@ I will be primarilly using this for cloud storage for me and my family, but some
 ### *Install*
 I will be installing the Nextcloud All-in-One [docker](#docker) image utilizing [Portainer](#Portainer) which i have set up previously. Following the [official documentation](https://github.com/nextcloud/all-in-one) I am going to be using a [premade docker compose script](https://github.com/nextcloud/all-in-one/blob/main/compose.yaml) the have made for Portainer. Deploying it with Cloudflare Tunnel comes with some major downsides according to the docs, so I should deplay it behind a traditional reverse proxy.
 
+---
 
 ## Jellyfin
 
+---
 
 ## Website
 
-
+---
