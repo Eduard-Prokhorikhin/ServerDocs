@@ -4,6 +4,7 @@
   - [GoDaddy](#godaddy)
   - [Cloudflare](#cloudflare)
   - [Portainer](#portainer)
+  - [Nginx Proxy Manager](#nginx-proxy-manager)
 - [Utils](#utils)
   - [RAID](#raid)
   - [Cron](#cron)
@@ -37,6 +38,51 @@ sudo docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -
 Chosing to utilize the legacy http port 9000 for conviniance reasons, as the https connection will not matter as any exposure to the web will be done with [Cloudflare Tunnel](#cloudflare-tunnel).
 
 To access the Portainer gui go to ```http://serverIP:9000```. There you will be asked to make an admin account. And thats it, you are good to go!
+
+## Nginx Proxy Manager
+Nginx Proxy Manager is a web-based application designed to simplify the process of managing reverse proxy configurations using the Nginx web server. It provides a user-friendly interface for users to create, modify, and manage proxy rules that enable routing incoming web traffic to various backend services, such as web applications or APIs. Nginx Proxy Manager streamlines the typically complex configuration tasks associated with setting up reverse proxies, making it accessible to users with varying levels of technical expertise. Through its intuitive dashboard, users can easily create custom domain configurations, set up SSL certificates, manage routing rules, and monitor traffic flow, all without directly dealing with intricate Nginx configuration files. This tool is particularly useful for individuals or organizations aiming to efficiently and securely expose multiple web services using a single public IP address.
+
+![img](https://nginxproxymanager.com/github.png)
+### *Install*
+Utilizing the proposed docker-compose file with some minor additions provided by the [official documentation](https://nginxproxymanager.com/guide/#quick-setup) through the [Portainer](#portainer) Stacks deployment feature:
+```
+version: '3.8'
+networks:
+  general:
+    external: true
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: ngxpm
+    restart: always
+    networks:
+      - general
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+```
+Then in Portainer:
+
+![img](/img/ngxpm1.png)
+![img](/img/ngxpm2.png)
+![img](/img/ngxpm3.png)
+
+Then click the "Deploy the stack" at the bottom of the page and you are done.
+
+You should now be able to access the managment page at ```yourServerIP:81/``` where you need to log in with the default username and password:
+```
+Email:    admin@example.com
+Password: changeme
+```
+
+![img](/img/ngxpm4.png)
+
+You will then be asked to change the default user and create a new password. Now the settup process is complete.
+
 
 # Utils
 ## RAID
