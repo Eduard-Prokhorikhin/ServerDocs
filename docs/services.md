@@ -145,7 +145,7 @@ Nextcloud is an open-source, self-hosted cloud collaboration platform that enabl
 I will be primarilly using this for cloud storage for me and my family, but some of the other features are also nice to have.
 
 ### *Install*
-I will be installing the Nextcloud All-in-One [docker](#docker) image utilizing [Portainer](#Portainer) which i have set up previously. Following the [official documentation](https://github.com/nextcloud/all-in-one) I am going to be using a [premade docker compose script](https://github.com/nextcloud/all-in-one/blob/main/compose.yaml) they have made for Portainer with some minor difrances like removing commented out extras. Deploying it with Cloudflare Tunnel comes with some major downsides according to the docs, so I will deploy it behind a traditional reverse proxy.
+I will be installing the Nextcloud All-in-One [docker](#docker) image utilizing [Portainer](#Portainer) which i have set up previously. Following the [official documentation](https://github.com/nextcloud/all-in-one) I am going to be using a [premade docker compose script](https://github.com/nextcloud/all-in-one/blob/main/compose.yaml) they have made for Portainer with some minor difrances like removing commented out extras. Pasting this docker-compose script just like in the [Nginx Proxy Manager](#nginx-proxymanager) install. Deploying it with Cloudflare Tunnel comes with some major downsides according to the docs, so I will deploy it with Nginx Proxy Manager instead.
 
 ```
 volumes:
@@ -168,9 +168,11 @@ services:
       - 8080:8080
     environment: # Is needed when using any of the options below
       - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
-      - NEXTCLOUD_DATADIR=/media/ncdata # Allows to set the host directory for Nextcloud's datadir. ⚠️⚠️⚠️ Warning: do not set or adjust this value after the initial Nextcloud installation is done! See https://github.com/nextcloud/all-in-one#how-to-change-the-default-location-of-nextclouds-datadir
+      - NEXTCLOUD_DATADIR=/media/nextcloud # Allows to set the host directory for Nextcloud's datadir. ⚠️⚠️⚠️ Warning: do not set or adjust this value after the initial Nextcloud installation is done! See https://github.com/nextcloud/all-in-one#how-to-change-the-default-location-of-nextclouds-datadir
       - NEXTCLOUD_MOUNT=/media/ # Allows the Nextcloud container to access the chosen directory on the host. See https://github.com/nextcloud/all-in-one#how-to-allow-the-nextcloud-container-to-access-directories-on-the-host
 ```
+Now before proceding with the setup you need to add the host to the reverse proxy as the settup will need acces to the internet to do a domain check. In the managment page for Nginx Proxy Manager at ```yourServerIP:81/``` add a new proxy host:
+
 
 ---
 
