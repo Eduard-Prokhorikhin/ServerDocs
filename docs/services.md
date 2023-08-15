@@ -173,6 +173,16 @@ services:
 ```
 Now before proceding with the setup you need to add the host to the reverse proxy as the settup will need acces to the internet to do a domain check. In the managment page for Nginx Proxy Manager at ```yourServerIP:81/``` add a new proxy host:
 
+![img](/img/nextcloud1.png)
+
+![img](/img/nextcloud2.png)
+
+![img](/img/nextcloud3.png)
+
+![img](/img/nextcloud4.png)
+
+And now asuming your proxy is set up correctly and the proper ports on your router are open everything should be ready to continue setup.
+
 
 ---
 
