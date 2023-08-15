@@ -180,6 +180,11 @@ Now before proceding with the setup you need to add the host to the reverse prox
 ![img](/img/nextcloud3.png)
 
 ![img](/img/nextcloud4.png)
+```
+client_body_buffer_size 512k;
+proxy_read_timeout 86400s;
+client_max_body_size 0;
+```
 
 And now asuming your proxy is set up correctly and the proper ports on your router are open everything should be ready to continue setup.
 
