@@ -145,7 +145,32 @@ Nextcloud is an open-source, self-hosted cloud collaboration platform that enabl
 I will be primarilly using this for cloud storage for me and my family, but some of the other features are also nice to have.
 
 ### *Install*
-I will be installing the Nextcloud All-in-One [docker](#docker) image utilizing [Portainer](#Portainer) which i have set up previously. Following the [official documentation](https://github.com/nextcloud/all-in-one) I am going to be using a [premade docker compose script](https://github.com/nextcloud/all-in-one/blob/main/compose.yaml) the have made for Portainer. Deploying it with Cloudflare Tunnel comes with some major downsides according to the docs, so I should deplay it behind a traditional reverse proxy.
+I will be installing the Nextcloud All-in-One [docker](#docker) image utilizing [Portainer](#Portainer) which i have set up previously. Following the [official documentation](https://github.com/nextcloud/all-in-one) I am going to be using a [premade docker compose script](https://github.com/nextcloud/all-in-one/blob/main/compose.yaml) they have made for Portainer with some minor difrances like removing commented out extras. Deploying it with Cloudflare Tunnel comes with some major downsides according to the docs, so I will deploy it behind a traditional reverse proxy.
+
+```
+volumes:
+  nextcloud_aio_mastercontainer:
+    name: nextcloud_aio_mastercontainer # This line is not allowed to be changed as otherwise the built-in backup solution will not work
+networks:
+  general:
+    external: true
+services:
+  nextcloud-aio-mastercontainer:
+    image: nextcloud/all-in-one:latest
+    networks:
+      - general
+    restart: always
+    container_name: nextcloud-aio-mastercontainer # This line is not allowed to be changed as otherwise AIO will not work correctly
+    volumes:
+      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config # This line is not allowed to be changed as otherwise the built-in backup solution will not work
+      - /var/run/docker.sock:/var/run/docker.sock:ro # May be changed on macOS, Windows or docker rootless. See the applicable documentation. If adjusting, don't forget to also set 'WATCHTOWER_DOCKER_SOCKET_PATH'!
+    ports:
+      - 8080:8080
+    environment: # Is needed when using any of the options below
+      - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+      - NEXTCLOUD_DATADIR=/media/ncdata # Allows to set the host directory for Nextcloud's datadir. ⚠️⚠️⚠️ Warning: do not set or adjust this value after the initial Nextcloud installation is done! See https://github.com/nextcloud/all-in-one#how-to-change-the-default-location-of-nextclouds-datadir
+      - NEXTCLOUD_MOUNT=/media/ # Allows the Nextcloud container to access the chosen directory on the host. See https://github.com/nextcloud/all-in-one#how-to-allow-the-nextcloud-container-to-access-directories-on-the-host
+```
 
 ---
 
