@@ -53,49 +53,19 @@ Nginx Proxy Manager is a web-based application designed to simplify the process 
 Utilizing the proposed docker-compose file with some minor additions provided by the [official documentation](https://nginxproxymanager.com/guide/#quick-setup) through the [Portainer](#portainer) Stacks deployment feature:
 ```
 version: '3.8'
-networks:
-  general:
-    external: true
 services:
-  npmapp:
+  app:
     image: 'jc21/nginx-proxy-manager:latest'
-    networks:
-      - general
     restart: always
+    network_mode: host
     container_name: npmapp
     ports:
-      # These ports are in format <host-port>:<container-port>
-      - '80:80' # Public HTTP Port
-      - '443:443' # Public HTTPS Port
-      - '81:81' # Admin Web Port
-      # Add any other Stream port you want to expose
-      - '3478:3478' # Nextcloud Talk
-    environment:
-      # Mysql/Maria connection parameters:
-      DB_MYSQL_HOST: "npmdb"
-      DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: "npm"
-      DB_MYSQL_PASSWORD: "dkR9wX7Uj7hW$r"
-      DB_MYSQL_NAME: "npm"
+      - '80:80'
+      - '81:81'
+      - '443:443'
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
-    depends_on:
-      - npmdb
-
-  npmdb:
-    image: 'jc21/mariadb-aria:latest'
-    networks:
-      - general
-    restart: always
-    container_name: npmdb
-    environment:
-      MYSQL_ROOT_PASSWORD: 'dkR9wX7Uj7hW$r'
-      MYSQL_DATABASE: 'npm'
-      MYSQL_USER: 'npm'
-      MYSQL_PASSWORD: 'dkR9wX7Uj7hW$r'
-    volumes:
-      - ./mysql:/var/lib/mysql
 ```
 Then in Portainer:
 
@@ -194,6 +164,7 @@ services:
       - 8080:8080
     environment: # Is needed when using any of the options below
       - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+      - APACHE_IP_BINDING=127.0.0.1 # Should be set when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else) that is running on the same host. See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
       - NEXTCLOUD_DATADIR=/media/nextcloud # Allows to set the host directory for Nextcloud's datadir. ⚠️⚠️⚠️ Warning: do not set or adjust this value after the initial Nextcloud installation is done! See https://github.com/nextcloud/all-in-one#how-to-change-the-default-location-of-nextclouds-datadir
       - NEXTCLOUD_MOUNT=/media/ # Allows the Nextcloud container to access the chosen directory on the host. See https://github.com/nextcloud/all-in-one#how-to-allow-the-nextcloud-container-to-access-directories-on-the-host
 ```
@@ -214,6 +185,18 @@ client_max_body_size 0;
 
 And now asuming your proxy is set up correctly and the proper ports on your router are open everything should be ready to continue setup.
 
+Take note of your Nextcloud AIO master password this will be used to access the root settings if you forgot your password or accidentally closed the page without noting (page only shows up first time visiting) alternativelly do this:
+```
+sudo cat /var/lib/docker/volumes/nextcloud_aio_mastercontainer/_data/data/configuration.json | grep password
+```
+
+Then proceede with the settup. Enter your domain after adding a new A-record to your domain for your nextcloud instance, as the AIO settup requires it.
+
+![img](/img/nextcloud5.png)
+
+Then select the apps/extentions you wish to use (i unchecked Nextcloud Talk) and select yor timezone. Last click on the "Download and start containers" button and after a little while you can open your nextcloud interface. Log in with the initial username and password given in the AIO interface. DONE!
+
+![img](/img/nextcloud6.png)
 
 ---
 
