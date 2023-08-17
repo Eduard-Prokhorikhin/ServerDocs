@@ -59,17 +59,41 @@ networks:
 services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
-    container_name: ngxpm
-    restart: always
     networks:
       - general
+    restart: always
     ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
+      # These ports are in format <host-port>:<container-port>
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+      # Add any other Stream port you want to expose
+      - '3478:3478' # Nextcloud Talk
+    environment:
+      # Mysql/Maria connection parameters:
+      DB_MYSQL_HOST: "npmdb"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "[password]"
+      DB_MYSQL_NAME: "npm"
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - npmdb
+
+  npmdb:
+    image: 'jc21/mariadb-aria:latest'
+    networks:
+      - general
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '[password]'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: '[password]'
+    volumes:
+      - ./mysql:/var/lib/mysql
 ```
 Then in Portainer:
 
