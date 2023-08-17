@@ -57,11 +57,12 @@ networks:
   general:
     external: true
 services:
-  app:
+  npmapp:
     image: 'jc21/nginx-proxy-manager:latest'
     networks:
       - general
     restart: always
+    container_name: npmapp
     ports:
       # These ports are in format <host-port>:<container-port>
       - '80:80' # Public HTTP Port
@@ -74,7 +75,7 @@ services:
       DB_MYSQL_HOST: "npmdb"
       DB_MYSQL_PORT: 3306
       DB_MYSQL_USER: "npm"
-      DB_MYSQL_PASSWORD: "[password]"
+      DB_MYSQL_PASSWORD: "dkR9wX7Uj7hW$r"
       DB_MYSQL_NAME: "npm"
     volumes:
       - ./data:/data
@@ -87,11 +88,12 @@ services:
     networks:
       - general
     restart: always
+    container_name: npmdb
     environment:
-      MYSQL_ROOT_PASSWORD: '[password]'
+      MYSQL_ROOT_PASSWORD: 'dkR9wX7Uj7hW$r'
       MYSQL_DATABASE: 'npm'
       MYSQL_USER: 'npm'
-      MYSQL_PASSWORD: '[password]'
+      MYSQL_PASSWORD: 'dkR9wX7Uj7hW$r'
     volumes:
       - ./mysql:/var/lib/mysql
 ```
