@@ -201,6 +201,40 @@ Then select the apps/extentions you wish to use (i unchecked Nextcloud Talk) and
 ---
 
 ## Jellyfin
+Jellyfin is an open-source media system that allows users to organize, manage, and stream their personal media collection across various devices. It serves as a comprehensive solution for cataloging and playing back movies, TV shows, music, and photos. Jellyfin supports a wide range of media formats and offers features such as user authentication, transcoding, subtitle support, and remote access. Users can set up their own media server using Jellyfin, enabling them to access their content from anywhere with an internet connection. Unlike many commercial media platforms, Jellyfin is free to use and can be customized and extended by the community, making it a popular choice for those seeking a self-hosted media streaming solution.
+
+![img](https://jellyfin.org/images/logo.svg)
+
+### *Install*
+This install uses the image from linuxserver see [this](https://hub.docker.com/r/linuxserver/jellyfin) for further documentation. This is the slightly modified docker-compose file I used (deployed though Portainer just like in the [Nginx Proxy Manager](#nginx-proxymanager) install.
+
+```
+---
+version: "2.1"
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - TZ=Europe/Oslo
+    volumes:
+      - /media/jellyfin:/config
+      - /media/nextcloud/bordduk69/files/Music:/data/music #path to my music mapped to /data/musick in container
+    ports:
+      - 8096:8096 # http
+      - 8920:8920 # https
+    restart: always
+```
+After deployment is done go to ```yourServerIP:8096/``` and procede with setup. You will need to create a user, select your media and will get the opportunity to change other settings.
+
+Now you should add a new host to your reverse proxy to expose this to the web (if you wish).
+Using Ngnix Proxy Manager:
+
+![img](/img/jellyfin1.png) ![img](/img/jellyfin1.png)
+
+Lastly remember to add the subdomain in your domain manager.
+
+For propper displaying of your media follow the [guidelines](https://jellyfin.org/docs/general/server/media/music)
 
 ---
 
