@@ -230,7 +230,7 @@ After deployment is done go to ```yourServerIP:8096/``` and procede with setup. 
 Now you should add a new host to your reverse proxy to expose this to the web (if you wish).
 Using Ngnix Proxy Manager:
 
-![img](/img/jellyfin1.png) ![img](/img/jellyfin1.png)
+![img](/img/jellyfin1.png) ![img](/img/jellyfin2.png)
 
 Lastly remember to add the subdomain in your domain manager.
 
