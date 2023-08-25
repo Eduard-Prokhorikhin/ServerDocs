@@ -5,6 +5,7 @@
   - [Cloudflare](#cloudflare)
   - [Portainer](#portainer)
   - [Nginx Proxy Manager](#nginx-proxy-manager)
+  - [Dashy](#dashy)
 - [Utils](#utils)
   - [RAID](#raid)
   - [Cron](#cron)
@@ -20,11 +21,11 @@
   
 # Management
 ## GoDaddy
-
+[⬆️ Back to Top](#software--services)
 ---
 
 ## Cloudflare
-
+[⬆️ Back to Top](#software--services)
 ---
 
 ## Portainer
@@ -43,6 +44,7 @@ Chosing to utilize the legacy http port 9000 for conviniance reasons, as the htt
 
 To access the Portainer gui go to ```http://serverIP:9000```. There you will be asked to make an admin account. And thats it, you are good to go!
 
+[⬆️ Back to Top](#software--services)
 ---
 
 ## Nginx Proxy Manager
@@ -85,19 +87,54 @@ Password: changeme
 
 You will then be asked to change the default user and create a new password. Now the settup process is complete.
 
+[⬆️ Back to Top](#software--services)
+---
+
+## Dashy
+Dashy: The Ultimate Homepage for Your Homelab is a versatile and customizable web-based dashboard designed to centralize and display various information and tools in one convenient location. It's specifically tailored for home laboratory setups, allowing users to aggregate and visualize data such as system statistics, network status, weather forecasts, calendar events, and more. Dashy empowers users to personalize their homepage with widgets and modules of their choice, creating a unique and efficient hub for managing and monitoring their homelab environment. Whether you're a tech enthusiast, hobbyist, or professional, Dashy offers a sleek and user-friendly solution to enhance your homelab experience. For more info see [dashy.to](https://dashy.to/).
+
+![img](https://dashy.to/img/homepage-assets/status-check-demo.gif)
+
+### *Install*
+Deploy it through Portainer just like in the [Nginx Proxy Manager](#nginx-proxymanager) install. Make sure to have a .yml file at the set location before deploying.
+
+```
+---
+version: "3.8"
+services:
+  dashy:
+    image: lissy93/dashy
+    container_name: dashy
+    # Pass in your config file below, by specifying the path on your host machine
+    volumes:
+      - /media/Dashy/conf.yml:/app/public/conf.yml
+    ports:
+      - 4000:80
+    # Set any environmental variables
+    environment:
+      - NODE_ENV=production
+    restart: always
+```
+
+To configure dashy you can use the interactive [demo tool](https://demo.dashy.to/) (or to get a .ylm file to start with).
+
+[⬆️ Back to Top](#software--services)
 ---
 
 # Utils
 ## RAID
 
+[⬆️ Back to Top](#software--services)
 ---
 
 ## Cron
 
+[⬆️ Back to Top](#software--services)
 ---
 
 ## Docker
 
+[⬆️ Back to Top](#software--services)
 ---
 
 ## Cloudflare Tunnel
@@ -126,10 +163,12 @@ In the tunnel configuration page chose the "Public hostanames" tab there you nee
 
 ![img](/img/tunnel4.png)
 
+[⬆️ Back to Top](#software--services)
 ---
 
 ## Grafana
 
+[⬆️ Back to Top](#software--services)
 ---
 
 # Services
@@ -198,6 +237,7 @@ Then select the apps/extentions you wish to use (i unchecked Nextcloud Talk) and
 
 ![img](/img/nextcloud6.png)
 
+[⬆️ Back to Top](#software--services)
 ---
 
 ## Jellyfin
@@ -236,8 +276,10 @@ Lastly remember to add the subdomain in your domain manager.
 
 For propper displaying of your media follow the [guidelines](https://jellyfin.org/docs/general/server/media/music)
 
+[⬆️ Back to Top](#software--services)
 ---
 
 ## Website
 
+[⬆️ Back to Top](#software--services)
 ---
