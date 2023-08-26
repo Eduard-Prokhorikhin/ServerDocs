@@ -188,14 +188,41 @@ services:
     pid: host
     ports:
       - 61208:61208
-      - 61209:61209
     network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - "GLANCES_OPT=-w"
 ```
-Deploy with portainer stack feature and this docker-compose file.
+Deploy with portainer stack feature and this docker-compose file. To secure the web interface we need to set a password. Access the container with the sh terminal. Type ```glances -s --username --password```.
+
+![img](/img/glances.png)
+
+Then copy the file using: ```sudo docker cp glances:root/.config/glances/bordduk69.pwd /media/secrets/glances_password```. Then redeploy your container with the following changes:
+```
+version: '3'
+
+services:
+  glances:
+    image: nicolargo/glances:latest-full
+    restart: always
+    container_name: glances
+    pid: host
+    ports:
+      - 61208:61208
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - "GLANCES_OPT=-w"
+    secrets:
+      - source: glances_password
+        target: /root/.config/glances/bordduk69.pwd
+
+secrets:
+  glances_password:
+    file: /media/secrets/glances_password
+```
 
 
 [⬆️ Back to Top](#software--services)
