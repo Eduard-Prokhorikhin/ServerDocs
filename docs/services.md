@@ -11,7 +11,7 @@
   - [Cron](#cron)
   - [Docker](#docker)
   - [Cloudflare Tunnel](#cloudflare-tunnel)
-  - [Grafama](#grafana)
+  - [Glances](#glances)
 - [Services](#services)
   - [Nextcloud](#nextcloud)
   - [Jellyfin](#jellyfin)
@@ -108,6 +108,7 @@ services:
     # Pass in your config file below, by specifying the path on your host machine
     volumes:
       - /media/Dashy/conf.yml:/app/public/conf.yml
+      - /media/Dashy/icons:/app/public/item-icons/
     ports:
       - 4000:80
     # Set any environmental variables
@@ -116,7 +117,13 @@ services:
     restart: always
 ```
 
-To configure dashy you can use the interactive [demo tool](https://demo.dashy.to/) (or to get a .ylm file to start with).
+To configure dashy you can use the interactive [demo tool](https://demo.dashy.to/) (or to get a .ylm file to start with). Or configure your instance directly in your dashy instance (web editor).
+
+I will be utilizing [Glances](#glances) for nice system monitoring widgets on my dashboard.
+
+Final result:
+![img](/img/dashy.png)
+
 
 [⬆️ Back to Top](#software--services)
 ---
@@ -166,7 +173,30 @@ In the tunnel configuration page chose the "Public hostanames" tab there you nee
 [⬆️ Back to Top](#software--services)
 ---
 
-## Grafana
+## Glances
+Glances is an open-source system cross-platform monitoring tool. It allows real-time monitoring of various aspects of your system such as CPU, memory, disk, network usage etc. It also allows monitoring of running processes, logged in users, temperatures, voltages, fan speeds etc. It also supports container monitoring, it supports different container management systems such as Docker, LXC. The information is presented in an easy to read dashboard and can also be used for remote monitoring of systems via a web interface or command line interface. It is easy to install and use and can be customized to show only the information that you are interested in.
+
+### *Install*
+```
+version: '3'
+
+services:
+  glances:
+    image: nicolargo/glances:latest-full
+    restart: always
+    container_name: glances
+    pid: host
+    ports:
+      - 61208:61208
+      - 61209:61209
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - "GLANCES_OPT=-w"
+```
+Deploy with portainer stack feature and this docker-compose file.
+
 
 [⬆️ Back to Top](#software--services)
 ---
