@@ -11,7 +11,7 @@
   - [Cron](#cron)
   - [Docker](#docker)
   - [Cloudflare Tunnel](#cloudflare-tunnel)
-  - [Glances](#glances)
+  - [Grafana](#grafana)
 - [Services](#services)
   - [Nextcloud](#nextcloud)
   - [Jellyfin](#jellyfin)
@@ -119,8 +119,6 @@ services:
 
 To configure dashy you can use the interactive [demo tool](https://demo.dashy.to/) (or to get a .ylm file to start with). Or configure your instance directly in your dashy instance (web editor).
 
-I will be utilizing [Glances](#glances) for nice system monitoring widgets on my dashboard.
-
 Final result:
 ![img](/img/dashy.png)
 
@@ -173,57 +171,7 @@ In the tunnel configuration page chose the "Public hostanames" tab there you nee
 [⬆️ Back to Top](#software--services)
 ---
 
-## Glances
-Glances is an open-source system cross-platform monitoring tool. It allows real-time monitoring of various aspects of your system such as CPU, memory, disk, network usage etc. It also allows monitoring of running processes, logged in users, temperatures, voltages, fan speeds etc. It also supports container monitoring, it supports different container management systems such as Docker, LXC. The information is presented in an easy to read dashboard and can also be used for remote monitoring of systems via a web interface or command line interface. It is easy to install and use and can be customized to show only the information that you are interested in.
-
-### *Install*
-```
-version: '3'
-
-services:
-  glances:
-    image: nicolargo/glances:latest-full
-    restart: always
-    container_name: glances
-    pid: host
-    ports:
-      - 61208:61208
-    network_mode: host
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - "GLANCES_OPT=-w"
-```
-Deploy with portainer stack feature and this docker-compose file. To secure the web interface we need to set a password. Access the container with the sh terminal. Type ```glances -s --username --password```.
-
-![img](/img/glances.png)
-
-Then copy the file using: ```sudo docker cp glances:root/.config/glances/bordduk69.pwd /media/secrets/glances_password```. Then redeploy your container with the following changes:
-```
-version: '3'
-
-services:
-  glances:
-    image: nicolargo/glances:latest-full
-    restart: always
-    container_name: glances
-    pid: host
-    ports:
-      - 61208:61208
-    network_mode: host
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - "GLANCES_OPT=-w"
-    secrets:
-      - source: glances_password
-        target: /root/.config/glances/bordduk69.pwd
-
-secrets:
-  glances_password:
-    file: /media/secrets/glances_password
-```
-
+## Grafana
 
 [⬆️ Back to Top](#software--services)
 ---
