@@ -108,7 +108,7 @@ services:
     # Pass in your config file below, by specifying the path on your host machine
     volumes:
       - /media/Dashy/conf.yml:/app/public/conf.yml
-      - /media/Dashy/icons:/app/public/item-icons/
+      - /media/Dashy/item-icons:/app/public/item-icons/
     ports:
       - 4000:80
     # Set any environmental variables
