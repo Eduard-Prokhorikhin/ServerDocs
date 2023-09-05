@@ -1,5 +1,5 @@
 # Hardware
-- **CPU:** AMD Ryzen 1600 6 core
+- **CPU:** AMD Ryzen 5600g 6 core (Previously Ryzen 1600 6 core)
 - **Motherboard:** Asus PRIME B450-PLUS latest BIOS
 - **RAM:** 16GB Corsair 3000Mhz
 - **PSU:** Corsair 550w 80+ Gold
