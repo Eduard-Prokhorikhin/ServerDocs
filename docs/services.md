@@ -272,6 +272,8 @@ services:
 After loging in to grafana interface at ```yourServerIP:3001/``` with username and password "admin", custimize your user details with new password and name and all.
 Now to add some panels to display data I used some premade ones by the community, to import them to the "Dashboards" tab in the hamburger menu, then click the "New" button, then chose "Import", last enter in the ID of the panel you want to import and click "Load" at the bottom. I will be using the **Cadvisor exporter** with ID ```14282``` and **Node Exporter Full** with ID ```1860```. Now you just need to expose your grafana instance with your trusty reverse proxy and you are good to go!
 
+![img](/img/grafana.png)
+
 [⬆️ Back to Top](#software--services)
 ---
 
