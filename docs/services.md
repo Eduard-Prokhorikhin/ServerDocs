@@ -172,6 +172,105 @@ In the tunnel configuration page chose the "Public hostanames" tab there you nee
 ---
 
 ## Grafana
+Grafana is a data visualization tool, in this case we are interested in using it for system resource monitoring. Together with the metrics gathering/collecting tool Prometheus and certain exporters makes for a great combo.
+
+![img](https://www.datanami.com/wp-content/uploads/2023/06/grafana-logo.png)
+
+## *Install*
+
+make sure to place the promethius config file in the spesified directory before running the container or else you will need to restart it.
+
+```
+# prometheus.yml                                                                    
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  # external_labels:
+  #  monitor: 'codelab-monitor'
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Example job for node_exporter
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['node_exporter:9100']
+
+  # Example job for cadvisor
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+```
+Then in portainer deploy the following stack:
+```
+---
+version: '3'
+
+volumes:
+  grafana-data:
+    driver: local
+  prometheus-data:
+    driver: local
+    
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - /media/prometheus/config:/etc/prometheus
+      - prometheus-data:/prometheus
+    command: 
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    restart: always
+    
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    ports:
+      - 3001:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: always
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    pid: host
+    restart: always
+    volumes:
+      - /:/host:ro,rslave
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest    
+    container_name: cadvisor
+
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    privileged: true
+    restart: always
+```
+
+After loging in to grafana interface at ```yourServerIP:3001/``` with username and password "admin", custimize your user details with new password and name and all.
+Now to add some panels to display data I used some premade ones by the community, to import them to the "Dashboards" tab in the hamburger menu, then click the "New" button, then chose "Import", last enter in the ID of the panel you want to import and click "Load" at the bottom. I will be using the **Cadvisor exporter** with ID ```14282``` and **Node Exporter Full** with ID ```1860```. Now you just need to expose your grafana instance with your trusty reverse proxy and you are good to go!
 
 [⬆️ Back to Top](#software--services)
 ---
