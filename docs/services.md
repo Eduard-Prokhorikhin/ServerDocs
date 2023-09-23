@@ -12,6 +12,7 @@
   - [Docker](#docker)
   - [Cloudflare Tunnel](#cloudflare-tunnel)
   - [Grafana](#grafana)
+  - [ntfy](#ntfy)
 - [Services](#services)
   - [Nextcloud](#nextcloud)
   - [Jellyfin](#jellyfin)
@@ -273,6 +274,47 @@ After loging in to grafana interface at ```yourServerIP:3001/``` with username a
 Now to add some panels to display data I used some premade ones by the community, to import them to the "Dashboards" tab in the hamburger menu, then click the "New" button, then chose "Import", last enter in the ID of the panel you want to import and click "Load" at the bottom. I will be using the **Cadvisor exporter** with ID ```14282``` and **Node Exporter Full** with ID ```1860```. Now you just need to expose your grafana instance with your trusty reverse proxy and you are good to go!
 
 ![img](/img/grafana.png)
+
+[⬆️ Back to Top](#software--services)
+---
+
+## ntfy
+ntfy (pronounced notify) is a simple HTTP-based pub-sub notification service. It allows you to send notifications to your phone or desktop via scripts from any computer, and/or using a REST API. It's infinitely flexible, and 100% free software. See [https://ntfy.sh/](https://ntfy.sh/) for more info.
+
+### *Install*
+Deploy with stack feature in Portainer with the following compose:
+```
+version: "2.3"
+
+services:
+  ntfy:
+    image: binwiederhier/ntfy
+    container_name: ntfy
+    command:
+      - serve
+    environment:
+      - TZ=CEST    # optional: set desired timezone
+    volumes:
+      - /media/ntfy/cache:/var/cache/ntfy
+      - /media/ntfy/settings:/etc/ntfy
+    restart: always
+```
+Create a server.yml in your settings directory with the following content (for more options see [server.yml](https://github.com/binwiederhier/ntfy/blob/main/server/server.yml):
+```
+# Default stuff
+base-url: "http://ntfy.eduardp.com"
+cache-file: "/var/cache/ntfy/cache.db"
+attachment-cache-dir: "/var/cache/ntfy/attachments"
+
+# Tell ntfy to use "X-Forwarded-For" to identify visitors
+behind-proxy: true
+
+# AUTHANTICATION
+auth-file: "/var/lib/ntfy/user.db"
+auth-default-access: "read-only"
+
+```
+
 
 [⬆️ Back to Top](#software--services)
 ---
