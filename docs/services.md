@@ -297,6 +297,8 @@ services:
     volumes:
       - /media/ntfy/cache:/var/cache/ntfy
       - /media/ntfy/settings:/etc/ntfy
+    ports:
+      - 8082:80
     restart: always
 ```
 Create a server.yml in your settings directory with the following content (for more options see [server.yml](https://github.com/binwiederhier/ntfy/blob/main/server/server.yml):
@@ -320,6 +322,10 @@ Then to add a new user access the container via the sh terminal and create a new
 ```
 ntfy user add --role=admin bordduk69
 ```
+
+Now just expose your ntfy server to the web and its ready to use!
+
+
 
 [⬆️ Back to Top](#software--services)
 ---
