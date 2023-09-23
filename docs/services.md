@@ -310,11 +310,16 @@ attachment-cache-dir: "/var/cache/ntfy/attachments"
 behind-proxy: true
 
 # AUTHANTICATION
-auth-file: "/var/lib/ntfy/user.db"
+auth-file: "/etc/ntfy/user.db"
 auth-default-access: "read-only"
 
 ```
+Make sure to create user.db file manually as it will cause a crash if its missing
 
+Then to add a new user access the container via the sh terminal and create a new user like so 
+```
+ntfy user add --role=admin bordduk69
+```
 
 [⬆️ Back to Top](#software--services)
 ---
