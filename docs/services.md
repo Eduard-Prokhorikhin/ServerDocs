@@ -313,7 +313,7 @@ behind-proxy: true
 
 # AUTHANTICATION
 auth-file: "/etc/ntfy/user.db"
-auth-default-access: "read-only"
+auth-default-access: "deny-all"
 
 ```
 Make sure to create user.db file manually as it will cause a crash if its missing
