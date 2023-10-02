@@ -320,7 +320,7 @@ Make sure to create user.db file manually as it will cause a crash if its missin
 
 Then to add a new user access the container via the sh terminal and create a new user like so 
 ```
-ntfy user add --role=admin bordduk69
+ntfy user add --role=admin [yourUsername]
 ```
 
 Now just expose your ntfy server to the web and its ready to use!
@@ -418,7 +418,7 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - /media/jellyfin:/config
-      - /media/nextcloud/bordduk69/files/Music:/data/music #path to my music mapped to /data/musick in container
+      - /media/nextcloud/bordduk69/files/Music:/data/music #path to my music mapped to /data/music in container
     ports:
       - 8096:8096 # http
       - 8920:8920 # https
