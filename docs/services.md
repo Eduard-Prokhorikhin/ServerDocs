@@ -492,9 +492,37 @@ Then install docker:
 
 ```
 
-Run the containers:
+Run the containers with ```docker-compose up -d``` from same dir as the following docker-compose.yml:
 ```
+version: "2"
 
+services:
+  ntfy:
+    image: binwiederhier/ntfy
+    container_name: ntfy
+    command:
+      - serve
+    environment:
+      - TZ=CEST    # optional: set desired timezone
+    volumes:
+      - /var/cache/ntfy:/var/cache/ntfy
+      - /etc/ntfy:/etc/ntfy
+    restart: always
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    volumes:
+      - /etc/uptime-kuma:/app/data
+    restart: always
+
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared:latest
+    restart: always
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN = yourToken
 ```
 
 [⬆️ Back to Top](#software--services)
