@@ -528,9 +528,9 @@ services:
     container_name: cloudflared-tunnel
     image: cloudflare/cloudflared:latest
     restart: always
-    command: tunnel --no-autoupdate run
+    command: tunnel run
     environment:
-      - TUNNEL_TOKEN = yourToken
+      - TUNNEL_TOKEN=yourToken
 ```
 
 With all containers running follow their respective additional settups. Then expose services through the cloudflare interface.
