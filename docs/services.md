@@ -17,6 +17,9 @@
   - [Nextcloud](#nextcloud)
   - [Jellyfin](#jellyfin)
   - [Website](#website)
+- [Remote](#remote)
+  - [VM](#vm)
+  - [Settup](#settup) 
 
  ---
   
@@ -139,6 +142,17 @@ Final result:
 ---
 
 ## Docker
+### *Install*
+Install docker
+```
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+```
+Install docker-compose
+```
+sudo apt-get update
+sudo apt-get install docker-compose-plugin
+```
 
 [⬆️ Back to Top](#software--services)
 ---
@@ -439,6 +453,49 @@ For propper displaying of your media follow the [guidelines](https://jellyfin.or
 ---
 
 ## Website
+
+[⬆️ Back to Top](#software--services)
+---
+
+# Remote
+### Problem:
+Currently if anything happens to my server at home (like a power outage or internet problems) i have no possible way of knowing without reaping the consequences, as everything runs on the same machine. If i want to notify myself of any problems i would have to counteract that limitation.
+
+### Solution:
+By setting up another "smaller" server offsite like in the cloud (which has exelent uptimes) i could host all i need to keep tabs on my main server at low cost. With the github education pack you get 200$ in free credits for a year on digitalocean, or 100$ on azure. Where digitalocian looked by far more affordable in my research, so i will give that a try.
+
+[⬆️ Back to Top](#software--services)
+---
+
+## VM
+For my needs i will be going with the 12$ a month config which has 1 CPU core, 2GB of RAM and 50GB of SSD storage, with the free credits i can run this config for a full year at no cost. Chosig a hosting location near you is recomended therefore i went with their servers in Frankfurt. Added my ssh key for accessing the vm and gave it a name.
+
+After creating the vm you can access it with ```ssh root@serverip```.
+
+[⬆️ Back to Top](#software--services)
+---
+
+## Settup
+What i will be deploying:
+- [Cloudflare Tunnel](#cloudflare-tunnel) for exposing to the internet
+- [ntfy](#ntfy) for notifications
+- [Uptime Kuma](uptime-kuma) for monitoring of uptime
+
+### *Install*
+First set up vm:
+```
+
+```
+
+Then install docker:
+```
+
+```
+
+Run the containers:
+```
+
+```
 
 [⬆️ Back to Top](#software--services)
 ---
