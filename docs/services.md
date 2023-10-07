@@ -482,17 +482,25 @@ What i will be deploying:
 - [Uptime Kuma](uptime-kuma) for monitoring of uptime
 
 ### *Install*
-First set up vm:
+First time settup:
 ```
-
+apt update
+apt upgrade -y
+ufw enable
+ufw allow 22
+reboot now
 ```
 
 Then install docker:
 ```
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+apt-get update
+apt-get install docker-compose-plugin
 
 ```
 
-Run the containers with ```docker-compose up -d``` from same dir as the following docker-compose.yml:
+Run the containers with ```docker compose up -d``` from same dir as the following docker-compose.yml:
 ```
 version: "2"
 
@@ -524,6 +532,8 @@ services:
     environment:
       - TUNNEL_TOKEN = yourToken
 ```
+
+With all containers running follow their respective additional settups. Then expose services through the cloudflare interface.
 
 [⬆️ Back to Top](#software--services)
 ---
