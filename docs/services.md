@@ -315,7 +315,7 @@ services:
       - 8082:80
     restart: always
 ```
-Create a server.yml in your settings directory with the following content (for more options see [server.yml](https://github.com/binwiederhier/ntfy/blob/main/server/server.yml):
+Create a server.yml in your settings directory with the following content and restart the container (for more options see [server.yml](https://github.com/binwiederhier/ntfy/blob/main/server/server.yml):
 ```
 # Default stuff
 base-url: "http://ntfy.eduardp.com"
@@ -330,7 +330,7 @@ auth-file: "/etc/ntfy/user.db"
 auth-default-access: "deny-all"
 
 ```
-Make sure to create user.db file manually as it will cause a crash if its missing
+You may to create user.db file manually as it will cause a crash if its missing and the server tries to start.
 
 Then to add a new user access the container via the sh terminal and create a new user like so 
 ```
