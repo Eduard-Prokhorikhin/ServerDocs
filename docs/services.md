@@ -472,8 +472,8 @@ services:
     container_name: pihole
     image: pihole/pihole:latest
     ports:
-      - "53:53"
-      - "79:80"
+      - "5353:53"
+      - "8081:80"
     environment:
       TZ: 'Europe/Oslo'
       # WEBPASSWORD: 'set a secure password here or it will be random'
