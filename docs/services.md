@@ -17,6 +17,7 @@
   - [Nextcloud](#nextcloud)
   - [Jellyfin](#jellyfin)
   - [Website](#website)
+  - [Pihole](#pi-hole)
 - [Remote](#remote)
   - [VM](#vm)
   - [Settup](#settup) 
@@ -457,6 +458,35 @@ For propper displaying of your media follow the [guidelines](https://jellyfin.or
 [⬆️ Back to Top](#software--services)
 ---
 
+## Pi-hole
+Pi-hole is a network-level ad blocker that filters out unwanted ads and tracking by intercepting DNS requests, improving online privacy and network performance.
+
+### *Install*
+Deploy via Portainer as always.
+```
+version: "3"
+
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53"
+      - "79:80"
+    environment:
+      TZ: 'Europe/Oslo'
+      # WEBPASSWORD: 'set a secure password here or it will be random'
+    # Volumes store your data between container upgrades
+    volumes:
+      - '/media/pihole:/etc/pihole'
+      - '/media/pihole/dnsmasq.d:/etc/dnsmasq.d'
+    restart: always
+```
+
+[⬆️ Back to Top](#software--services)
+---
+
 # Remote
 ### Problem:
 Currently if anything happens to my server at home (like a power outage or internet problems) i have no possible way of knowing without reaping the consequences, as everything runs on the same machine. If i want to notify myself of any problems i would have to counteract that limitation.
@@ -537,3 +567,4 @@ With all containers running follow their respective additional settups. Then exp
 
 [⬆️ Back to Top](#software--services)
 ---
+
