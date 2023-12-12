@@ -30,6 +30,15 @@
 ---
 
 ## Cloudflare
+### Dynamic DNS
+If you have a dunamic IP from your ISP then setting up automatic DNS update might be smart to save yourself the time and hassle of doing it manually for every domain connected to the same ip.
+### *Install*
+install ddclient [their github](https://github.com/ddclient/ddclient)
+
+```sudo apt install ddclient```
+
+Then procede with the config for me I had to chose my DNS provider as Cloudflare, write the email assosiated with my account, the global API key (can be found at your [profile](https://dash.cloudflare.com/profile/api-tokens)) and then give it all of the domains (complete form eg. sub.main.com) separated by comma. After you have cleared the settup all should be good and turned on.
+
 [⬆️ Back to Top](#software--services)
 ---
 
