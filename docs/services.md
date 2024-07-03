@@ -10,6 +10,7 @@
   - [RAID](#raid)
   - [Cron](#cron)
   - [Docker](#docker)
+  - [Auto security updates](#auto-security-updates)
   - [Cloudflare Tunnel](#cloudflare-tunnel)
   - [Grafana](#grafana)
   - [ntfy](#ntfy)
@@ -176,6 +177,31 @@ Install docker-compose
 sudo apt-get update
 sudo apt-get install docker-compose-plugin
 ```
+
+[⬆️ Back to Top](#software--services)
+---
+
+## Auto security updates
+With many voulnerabilities running loose at all times its good to patch them as soon as possible.
+
+### *Setup*
+Source: [here](https://thenewstack.io/enable-automatic-updates-for-ubuntu-server/)
+
+First verify that the software is intalled, if not install it first.
+```
+which unattended-upgrades
+```
+
+Then activate the feature:
+```
+sudo dpkg-reconfigure -plow unattended-upgrades
+```
+
+Take a look through the config file located at:
+```
+sudo nano /etc/apt/apt.conf.d/50unattended-upgrades
+```
+and make sure ```“${distro_id}:${distro_codename}-security”;``` is present and not commented out. By default the config is preatty good but if you want to go more in dept such as enabling auto reboot or delete unused dependencies.
 
 [⬆️ Back to Top](#software--services)
 ---
